@@ -102,7 +102,7 @@
                                     <th class="min-w-125px">Name</th>
                                     <th class="min-w-125px">Reference ID</th>
                                     <th class="min-w-125px">Phone Number</th>
-                                    <th class="min-w-125px">Email</th>
+                                    <th class="min-w-125px">Date</th>
                                     <th class="min-w-125px">Address</th>
                                     <th class="text-end min-w-70px">Actions</th>
                                 </tr>
@@ -150,13 +150,13 @@
                                                 <!-- Reference ID -->
                                                 <div class="col-md-6 mb-3">
                                                     <label for="reference_id" class="form-label fw-semibold">Reference ID</label>
-                                                    <input type="text" name="reference_id" required id="reference_id" class="form-control" placeholder="Enter reference ID">
+                                                    <input type="number" name="reference_id" required id="reference_id" class="form-control" placeholder="Enter reference ID">
                                                 </div>
 
                                                 <!-- Email -->
                                                 <div class="col-md-6 mb-3">
                                                     <label for="email" class="form-label fw-semibold">Email</label>
-                                                    <input type="email" name="email" id="email" required class="form-control" placeholder="Enter email address">
+                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter email address">
                                                 </div>
 
                                                 <!-- Phone Number -->

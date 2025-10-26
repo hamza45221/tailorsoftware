@@ -16,10 +16,24 @@ var KTModalCustomersAdd = function () {
             form,
             {
                 fields: {
-                    // 'category_id': {
+                    // 'name': {
                     //     validators: {
                     //         notEmpty: {
-                    //             message: 'Category is required'
+                    //             message: 'Name is required'
+                    //         }
+                    //     }
+                    // },
+                    // 'phone_number': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'Phone Number is required'
+                    //         }
+                    //     }
+                    // },
+                    // 'reference_id': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'Reference ID is required'
                     //         }
                     //     }
                     // },
@@ -53,17 +67,14 @@ var KTModalCustomersAdd = function () {
             // $('[name="category_id"]').val(data.category_id).trigger('change');
 
             $('[name="name"]').val(data.name);
-            $('[name="last_name"]').val(data.last_name);
+            $('[name="reference_id"]').val(data.reference_id);
             $('[name="email"]').val(data.email);
             $('[name="phone_number"]').val(data.phone_number);
-            $('[name="role"]').val(data.role);
-            $('[name="password"]').val(data.password);
-
-
+            $('[name="address"]').val(data.address);
 
 
             $('[name=id]').val(editId);
-            $('#image').attr('src',data.image)
+            // $('#image').attr('src',data.image)
 
             edit=true;
             console.log(data.description);
@@ -72,12 +83,10 @@ var KTModalCustomersAdd = function () {
         $('#kt_modal_add_customer').on('hide.bs.modal',function(){
             edit=false;
             $('[name="name"]').val('');
-            $('[name="last_name"]').val('');
+            $('[name="reference_id"]').val('');
             $('[name="email"]').val('');
             $('[name="phone_number"]').val('');
-            $('[name="role"]').val('');
-            $('[name="password"]').val('');
-            $('[name="image"]').val('');
+            $('[name="address"]').val('');
 
             console.log('modal hide');
 

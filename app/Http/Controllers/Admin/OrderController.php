@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class OrderController extends Controller
 {
+
+    public function create()
+    {
+        return view('admin.order.create');
+    }
     public function index(){
         return view('admin.customer');
     }
@@ -72,5 +76,4 @@ class CustomerController extends Controller
         $departments = Customer::whereIn('id',$request->id)->delete();
         return response(['success'=>true,'message'=>'Selected row deleted successfully...']);
     }
-
 }

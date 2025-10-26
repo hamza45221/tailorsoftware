@@ -38,8 +38,8 @@ var KTCustomersList = function () {
                 { data: 'id' },
                 { data: 'name' },
                 { data: 'reference_id' },
-                { data: 'email' },
                 { data: 'phone_number' },
+                { data: 'created_at' },
                 { data: 'address' },
                 { data: 'actions' }
             ]
