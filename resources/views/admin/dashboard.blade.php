@@ -25,7 +25,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="row g-5 mt-5 d-flex flex-column justify-content-center align-items-center">
                                 <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 ">
                                     <a href="#"  class="h-100 mb-3">
@@ -214,12 +214,12 @@
                                                     </th>
 
                                                     <th class="min-w-125px">Name</th>
-                                                    <th class="min-w-110px">Customer ID</th>
+                                                    <th class="min-w-120px">Customer ID</th>
                                                     <th class="min-w-125px">Phone Number</th>
-                                                    <th class="min-w-125px">Date</th>
+                                                    <th class="min-w-120px">Date</th>
                                                     <th class="min-w-125px">Address</th>
-                                                    <th class="min-w-120px">Status</th>
-                                                    <th class="min-w-120px">Quantity</th>
+                                                    <th class="min-w-110px">Status</th>
+                                                    <th class="min-w-110px">Quantity</th>
                                                     <th class="text-end min-w-70px">Actions</th>
                                                 </tr>
                                                 </thead>
@@ -542,7 +542,28 @@
 
                 </div>
             </div>
+
             @include('partials.admin.footer')
+        </div>
+    </div>
+
+
+    {{--         Orders View Card           --}}
+
+    <div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewOrderLabel">Order Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div id="resumeCardContainer">
+                        <!-- Resume card HTML will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -632,52 +653,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 //     ======================= pending status datatable js work
-
-
 document.addEventListener('DOMContentLoaded', function () {
-    const roleSelect = document.getElementById('service');
-    const multipleFields = document.getElementById('multipleFields');
-    const singleQuantityWrap = document.getElementById('singleQuantityWrap');
-    const singleQuantity = document.getElementById('quantity');
-    const partQtyInputs = document.querySelectorAll('.part-qty');
 
-    function updateFields() {
-        if (roleSelect.value === 'Multiple') {
-            singleQuantityWrap.style.display = 'none';
-            singleQuantity.removeAttribute('required');
-            singleQuantity.value = '';
-            multipleFields.style.display = 'block';
-            partQtyInputs.forEach(i => {
-                i.setAttribute('required', 'required');
-            });
-        } else {
-            singleQuantityWrap.style.display = 'block';
-            singleQuantity.setAttribute('required', 'required');
-            multipleFields.style.display = 'none';
-            partQtyInputs.forEach(i => {
-                i.removeAttribute('required');
-                i.value = '';
-            });
+    // Run when modal is opened
+    $('#kt_modal_add_customer').on('shown.bs.modal', function () {
+
+        // Get elements inside this modal
+        const modal = this;
+        const serviceSelect = modal.querySelector('#service');
+        const multipleFields = modal.querySelector('#multipleFields');
+        const singleQuantityWrap = modal.querySelector('#singleQuantityWrap');
+        const singleQuantity = modal.querySelector('#quantity');
+        const partQtyInputs = modal.querySelectorAll('.part-qty');
+
+        // Safety check
+        if (!serviceSelect) return;
+
+        // Function to show/hide fields based on selection
+        function updateFields() {
+            const value = serviceSelect.value.trim();
+
+            if (value === 'Multiple') {
+                // Hide single quantity
+                if (singleQuantityWrap) singleQuantityWrap.style.display = 'none';
+                if (singleQuantity) {
+                    singleQuantity.removeAttribute('required');
+                    singleQuantity.value = '';
+                }
+
+                // Show multiple section
+                multipleFields.style.display = 'block';
+                partQtyInputs.forEach(input => input.setAttribute('required', 'required'));
+            } else {
+                // Show single quantity
+                if (singleQuantityWrap) singleQuantityWrap.style.display = 'block';
+                if (singleQuantity) singleQuantity.setAttribute('required', 'required');
+
+                // Hide multiple fields
+                multipleFields.style.display = 'none';
+                partQtyInputs.forEach(input => {
+                    input.removeAttribute('required');
+                    input.value = '';
+                });
+            }
         }
-    }
 
-    // run on load (for edit forms or page reload)
-    updateFields();
+        // Bind change event
+        serviceSelect.addEventListener('change', updateFields);
 
-    // run on change
-    roleSelect.addEventListener('change', updateFields);
+        // Run once when modal opens (for edit mode)
+        updateFields();
+    });
 });
 
 
 // ============= code for fetching the data in front of dashboard:
-
 $(document).ready(function() {
     $('#kt_customers_table').DataTable({
         // processing: true,
         serverSide: true,
         ajax: "{{ route('dashboard.pending.orders') }}",
         columns: [
-            { data: 'id', name: 'id', orderable: true, searchable: true },
+            { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
             { data: 'customer_id', name: 'customer_id' },
             { data: 'phone_number', name: 'phone_number' },
@@ -691,12 +728,161 @@ $(document).ready(function() {
 });
     </script>
 
+{{-- code for details  view card    --}}
+    <script>
+        $(document).on('click', '.btn-view', function() {
+            const data = $(this).data('dt');
 
+            let html = `
+    <div class="card border-0">
 
+        <!-- Header Section -->
+        <div class="header-section rounded-3 border-bottom pb-3 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-10">
+                    <div class=" row align-items-center">
+                            ${data.name ? `<h1 class="name-title display-6 fw-bold mb-2 pb-2">${data.name}</h1>` : ''}
+                        <div class="col-md-4  mb-2">
+
+                            ${data.phone_number ? `<p class="fs-6 mb-1"><strong>Phone:</strong> ${data.phone_number}</p>` : ''}
+                            ${data.address ? `<p class="fs-6 mb-1"><strong>Address:</strong> ${data.address}</p>` : ''}
+                        </div>
+                         ${ ( (data.shalwar_kameez_qty !== undefined && data.shalwar_kameez_qty !== null && data.shalwar_kameez_qty !== '') ||
+                (data.waistcoat_qty !== undefined && data.waistcoat_qty !== null && data.waistcoat_qty !== '') ||
+                (data.coat_qty !== undefined && data.coat_qty !== null && data.coat_qty !== '') ||
+                (data.kurta_qty !== undefined && data.kurta_qty !== null && data.kurta_qty !== '') ) ? `
+                            <div class="col-md-6 mb-2">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        ${ (data.shalwar_kameez_qty !== undefined && data.shalwar_kameez_qty !== null && data.shalwar_kameez_qty !== '') ? `<p class="fs-6 mb-1"><strong>Shalwar Kameez:</strong> ${data.shalwar_kameez_qty}</p>` : '' }
+                                        ${ (data.waistcoat_qty !== undefined && data.waistcoat_qty !== null && data.waistcoat_qty !== '') ? `<p class="fs-6 mb-1"><strong>Waistcoat:</strong> ${data.waistcoat_qty}</p>` : '' }
+                                    </div>
+                                    <div class="col-md-6">
+                                        ${ (data.coat_qty !== undefined && data.coat_qty !== null && data.coat_qty !== '') ? `<p class="fs-6 mb-1"><strong>Coat:</strong> ${data.coat_qty}</p>` : '' }
+                                        ${ (data.kurta_qty !== undefined && data.kurta_qty !== null && data.kurta_qty !== '') ? `<p class="fs-6 mb-1"><strong>Kurta:</strong> ${data.kurta_qty}</p>` : '' }
+                                    </div>
+                                </div>
+                            </div>
+                            ` : '' }
+
+                        <div class=" col-md-2 mb-2">
+                           ${data.quantity && data.service ? `<p class="fs-6 mb-1"><strong>${data.service}:</strong> ${data.quantity}</p>` : ''}
+                            ${data.total_amount ? `<p class="fs-6 mb-1"><strong>Total:</strong> ${data.total_amount}</p>` : ''}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 text-md-end mt-3 mt-md-0">
+                    ${data.customer_id ? `
+                        <span class="d-block fs-7 mb-1">Customer ID</span>
+                        <span class="badge text-light px-3 py-2" style="font-size: 36px;">
+                            ${data.customer_id}
+                        </span>
+                    ` : ''}
+                </div>
+            </div>
+        </div>
+
+        <!-- Shalwar Kameez Table -->
+        <h3 class="mb-4 text-center bg-dark text-light py-3 rounded-3 fw-bold">Shalwar Kameez Measurements</h3>
+        <table class="table view-table table-bordered order-table align-middle text-center">
+            <thead>
+                <tr class="bg-light">
+                    <th>گلا</th>
+                    <th>کمر</th>
+                    <th>چھاتی تیار</th>
+                    <th>چھاتی</th>
+                    <th>بازو</th>
+                    <th>تیرہ</th>
+                    <th>لمبائی</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${(data.gala || data.kamar || data.chhati_tayar || data.chhati || data.bazoo || data.teera || data.lambai) ? `
+                <tr>
+                    <td>${data.gala ?? ''}</td>
+                    <td>${data.kamar ?? ''}</td>
+                    <td>${data.chhati_tayar ?? ''}</td>
+                    <td>${data.chhati ?? ''}</td>
+                    <td>${data.bazoo ?? ''}</td>
+                    <td>${data.teera ?? ''}</td>
+                    <td>${data.lambai ?? ''}</td>
+                </tr>` : ''}
+
+                ${(data.collar_bean || data.collar || data.kaff || data.pati || data.gheera_tayar || data.pancha || data.shalwar) ? `
+                <tr class="bg-light">
+                    <th>کالر / بین</th>
+                    <th>کالر</th>
+                    <th>کف</th>
+                    <th>پٹی</th>
+                    <th>گھیرا تیار</th>
+                    <th>پانچہ</th>
+                    <th>شلوار</th>
+                </tr>
+                <tr>
+                    <td>${data.collar_bean ?? ''}</td>
+                    <td>${data.collar ?? ''}</td>
+                    <td>${data.kaff ?? ''}</td>
+                    <td>${data.pati ?? ''}</td>
+                    <td>${data.gheera_tayar ?? ''}</td>
+                    <td>${data.pancha ?? ''}</td>
+                    <td>${data.shalwar ?? ''}</td>
+                </tr>` : ''}
+
+                ${(data.button_style || data.pancha_style || data.shalwar_pocket || data.side_pocket || data.front_pocket) ? `
+                <tr class="bg-light">
+                    <th>بٹن</th>
+                    <th>پانچہ</th>
+                    <th>شلوار پاکٹ</th>
+                    <th>سائڈ پاکٹ</th>
+                    <th>فرنٹ پاکٹ</th>
+                    <th colspan="2"></th>
+                </tr>
+                <tr>
+                    <td>${data.button_style ?? ''}</td>
+                    <td>${data.pancha_style ?? ''}</td>
+                    <td>${data.shalwar_pocket == 'on' ? 'Yes' : (data.shalwar_pocket == 'off' ? 'no' : '')}</td>
+                    <td>${data.side_pocket ?? ''}</td>
+                    <td>${data.front_pocket == 'on' ? 'Yes' : (data.front_pocket == 'off' ? 'no' : '')}</td>
+                    <td colspan="2"></td>
+                </tr>` : ''}
+            </tbody>
+        </table>
+
+        <!-- Coat / Waistcoat Table -->
+        ${(data.w_coat_hip || data.w_coat_gala || data.w_coat_kamar || data.w_coat_chhati || data.w_coat_bazoo || data.w_coat_teera || data.w_coat_lambai) ? `
+        <h3 class="mb-4 text-center bg-dark text-light py-3 rounded-3 fw-bold mt-5">Coat / Waistcoat Measurements</h3>
+        <table class="table table-bordered order-table align-middle text-center">
+            <thead>
+                <tr class="bg-light">
+                    <th>ہپ</th>
+                    <th>گلا</th>
+                    <th>کمر</th>
+                    <th>چھاتی</th>
+                    <th>بازو</th>
+                    <th>تیرہ</th>
+                    <th>لمبائی</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${data.w_coat_hip ?? ''}</td>
+                    <td>${data.w_coat_gala ?? ''}</td>
+                    <td>${data.w_coat_kamar ?? ''}</td>
+                    <td>${data.w_coat_chhati ?? ''}</td>
+                    <td>${data.w_coat_bazoo ?? ''}</td>
+                    <td>${data.w_coat_teera ?? ''}</td>
+                    <td>${data.w_coat_lambai ?? ''}</td>
+                </tr>
+            </tbody>
+        </table>` : ''}
+    </div>`;
+
+            $('#resumeCardContainer').html(html);
+        });
+    </script>
 
     <script src="{{ asset('admin_assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('admin_assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
-
     <script src="{{ asset('custom/order.js') }}"></script>
     <script src="{{ asset('custom/add-order.js') }}"></script>
 @endsection

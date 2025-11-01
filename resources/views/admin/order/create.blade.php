@@ -1,5 +1,4 @@
 @extends('layouts.mainadmin')
-
 @section('content')
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
         <!--begin::Content wrapper-->
@@ -66,13 +65,13 @@
                                             <!-- Phone Number -->
                                             <div class="col-md-6 mb-3">
                                                 <label for="phone_number" class="form-label">Phone Number </label>
-                                                <input type="tel" name="phone_number" id="phone_number" class="form-control" placeholder="Enter phone number">
+                                                <input type="tel" name="phone_number" required id="phone_number" class="form-control" placeholder="Enter phone number">
                                             </div>
 
                                             <!-- Phone Number -->
                                             <div class="col-md-6 mb-3">
                                                 <label for="phone_number2" class="form-label">Phone Number (2)</label>
-                                                <input type="tel" name="phone_number2" id="phone_number2" class="form-control" placeholder="Enter phone number">
+                                                <input type="tel" name="phone_number2" id="phone_number2" class="form-control" placeholder="Enter phone number 2">
                                             </div>
 
 
@@ -124,7 +123,7 @@
                                             <!-- Status -->
                                             <div class="col-md-6 mb-3">
                                                 <label for="status" class="form-label">Status</label>
-                                                <select name="status" id="status" class="form-select" required>
+                                                <select name="status" id="status" class="form-select" >
                                                     <option value="Pending">Pending</option>
                                                     <option value="Complete">Complete</option>
                                                 </select>
@@ -147,7 +146,7 @@
                                             <!-- Address -->
                                             <div class="col-md-12 mb-3">
                                                 <label for="address" class="form-label">Address</label>
-                                                <textarea  name="address" id="address" rows="2" class="form-control" placeholder="Enter address" ></textarea>
+                                                <textarea  name="address" id="address" rows="2" class="form-control" placeholder="Enter address..." ></textarea>
                                             </div>
 
 
@@ -195,7 +194,7 @@
 
                                                     <tr class="order-row">
                                                         <td>
-                                                            <select type="text" class="form-select"  style="width: 90% !important; border: 0" name="collar_bean">
+                                                            <select type="text" class="form-select"  name="collar_bean">
                                                                 <option value="bean">Bean</option>
                                                                 <option value="collar Nok">Collar Nok</option>
                                                             </select>
@@ -220,14 +219,14 @@
 
                                                     <tr class="order-row">
                                                         <td>
-                                                            <select type="text" class="form-select"  style="width: 90% !important; border: 0" name="button_style">
+                                                            <select type="text" class="form-select"   name="button_style">
                                                                 <option value="Simple">Simple</option>
                                                                 <option value="Metal">Metal</option>
                                                                 <option value="Fancy">Fancy</option>
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <select type="text" class="form-select"  style="width: 90% !important;  border: 0" name="pancha_style">
+                                                            <select type="text" class="form-select" name="pancha_style">
                                                                 <option value="Simple">Simple</option>
                                                                 <option value="Kanta">Kanta</option>
                                                                 <option value="Beeding">Beeding</option>
@@ -325,9 +324,6 @@
 
 @section('scripts')
     <script>
-{{--        var fetchUrl = '{{ route('admin.user.fetch') }}';--}}
-
-
         document.addEventListener('DOMContentLoaded', function () {
             const roleSelect = document.getElementById('service');
             const multipleFields = document.getElementById('multipleFields');
@@ -337,38 +333,27 @@
 
             function updateFields() {
                 if (roleSelect.value === 'Multiple') {
-                    // hide single quantity
                     singleQuantityWrap.style.display = 'none';
                     singleQuantity.removeAttribute('required');
-                    singleQuantity.value = ''; // optional: clear single quantity
-
-                    // show multiple fields and set required
+                    singleQuantity.value = '';
                     multipleFields.style.display = 'block';
                     partQtyInputs.forEach(i => {
                         i.setAttribute('required', 'required');
                     });
                 } else {
-                    // show single quantity
                     singleQuantityWrap.style.display = 'block';
                     singleQuantity.setAttribute('required', 'required');
-
-                    // hide multiple fields and remove required
                     multipleFields.style.display = 'none';
                     partQtyInputs.forEach(i => {
                         i.removeAttribute('required');
-                        i.value = ''; // optional: clear the part qtys
+                        i.value = '';
                     });
                 }
             }
-
-            // run on load (for edit forms or page reload)
             updateFields();
-
-            // run on change
             roleSelect.addEventListener('change', updateFields);
         });
     </script>
-{{--    <script src="{{ asset('admin_assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>--}}
     <script src="{{ asset('admin_assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
     <script src="{{ asset('custom/order.js') }}"></script>
     <script src="{{ asset('custom/add-order.js') }}"></script>

@@ -82,10 +82,21 @@ class DashboardController extends Controller
             })
             ->addColumn('actions', function ($program) {
                 return '
-                        <div class="menu-item px-3">
-                            <a data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer" data-dt=\''.json_encode($program).'\' data-id="'.$program->id.'" class="menu-link btn-edit px-3">Edit</a>
+                        <div class="d-flex justify-content-center align-items-center ">
+                        <div class="px-2">
+                            <a data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer" data-dt=\''.json_encode($program).'\' data-id="'.$program->id.'" class="menu-link btn-edit "> <i class="fa-solid fa-pen "></i></a>
                         </div>
-                          ';
+
+                        <div class="menu-item ">
+                            <a data-id="'.$program->id.'"
+                            style=""
+                           data-bs-toggle="modal"
+                           data-bs-target="#viewOrderModal"
+                           data-dt=\''.json_encode($program).'\'
+                           class="btn-view px-2"> <i class="fa-solid fa-eye text-info"></i> </a>
+                        </div>
+                        </div>
+                     ';
             })
             ->rawColumns(['id', 'status', 'actions'])
             ->make(true);

@@ -29,8 +29,15 @@
     <!--end::Global Stylesheets Bundle-->
     <script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
 
+
+{{--    urdu font --}}
+
     <style>
 
+        @font-face {
+            font-family: common;
+            src: url("admin_assets/font/Noto_Nastaliq_Urdu/static/common.ttf");
+        }
 
         .order-table-p-d
         {
@@ -44,10 +51,14 @@
             /*box-shadow: 0 0 5px rgba(0,0,0,0.1);.*/
         }
 
+        .order-table th {
+            font-family: common !important;
+        }
         .order-table th, .order-table td {
+
             border: 0.5px solid #ccc;
             text-align: center;
-            padding: 5px;
+            padding: 13px !important;
             font-size: 16px;
         }
 
@@ -60,8 +71,8 @@
         }
 
         .order-subheader th {
+            font-family: common !important;
             background-color: #e9e9e9; /* light gray */
-            font-weight: bold;
             padding: 18px 0px;
         }
 

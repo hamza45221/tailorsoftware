@@ -226,7 +226,7 @@
                                                     </select>
                                                 </div>
 
-                                                <!-- Phone Number -->
+                                                <!-- radio -->
                                                 <div class="col-md-6 mb-4">
                                                     <label for="reference_person" class="form-label mb-3">Reference Person</label> <br>
 
@@ -291,7 +291,7 @@
 
                                                         <tr class="order-row">
                                                             <td>
-                                                                <select type="text" class="form-select"  style="width: 90% !important; border: 0" name="collar_bean">
+                                                                <select type="text" class="form-select"  name="collar_bean">
                                                                     <option value="bean">Bean</option>
                                                                     <option value="collar Nok">Collar Nok</option>
                                                                 </select>
@@ -458,49 +458,61 @@
 @section('scripts')
     <script>
         var fetchUrl='{{route('admin.order.fetch')}}';
+        document.addEventListener('DOMContentLoaded', function () {
 
+            // Run when modal is opened
+            $('#kt_modal_add_customer').on('shown.bs.modal', function () {
 
-            document.addEventListener('DOMContentLoaded', function () {
-            const roleSelect = document.getElementById('service');
-            const multipleFields = document.getElementById('multipleFields');
-            const singleQuantityWrap = document.getElementById('singleQuantityWrap');
-            const singleQuantity = document.getElementById('quantity');
-            const partQtyInputs = document.querySelectorAll('.part-qty');
+                // Get elements inside this modal
+                const modal = this;
+                const serviceSelect = modal.querySelector('#service');
+                const multipleFields = modal.querySelector('#multipleFields');
+                const singleQuantityWrap = modal.querySelector('#singleQuantityWrap');
+                const singleQuantity = modal.querySelector('#quantity');
+                const partQtyInputs = modal.querySelectorAll('.part-qty');
 
-            function updateFields() {
-            if (roleSelect.value === 'Multiple') {
-            // hide single quantity
-            singleQuantityWrap.style.display = 'none';
-            singleQuantity.removeAttribute('required');
-            singleQuantity.value = ''; // optional: clear single quantity
+                // Safety check
+                if (!serviceSelect) return;
 
-            // show multiple fields and set required
-            multipleFields.style.display = 'block';
-            partQtyInputs.forEach(i => {
-            i.setAttribute('required', 'required');
+                // Function to show/hide fields based on selection
+                function updateFields() {
+                    const value = serviceSelect.value.trim();
+
+                    if (value === 'Multiple') {
+                        // Hide single quantity
+                        if (singleQuantityWrap) singleQuantityWrap.style.display = 'none';
+                        if (singleQuantity) {
+                            singleQuantity.removeAttribute('required');
+                            singleQuantity.value = '';
+                        }
+
+                        // Show multiple section
+                        multipleFields.style.display = 'block';
+                        partQtyInputs.forEach(input => input.setAttribute('required', 'required'));
+                    } else {
+                        // Show single quantity
+                        if (singleQuantityWrap) singleQuantityWrap.style.display = 'block';
+                        if (singleQuantity) singleQuantity.setAttribute('required', 'required');
+
+                        // Hide multiple fields
+                        multipleFields.style.display = 'none';
+                        partQtyInputs.forEach(input => {
+                            input.removeAttribute('required');
+                            input.value = '';
+                        });
+                    }
+                }
+
+                // Bind change event
+                serviceSelect.addEventListener('change', updateFields);
+
+                // Run once when modal opens (for edit mode)
+                updateFields();
+            });
         });
-        } else {
-            // show single quantity
-            singleQuantityWrap.style.display = 'block';
-            singleQuantity.setAttribute('required', 'required');
-
-            // hide multiple fields and remove required
-            multipleFields.style.display = 'none';
-            partQtyInputs.forEach(i => {
-            i.removeAttribute('required');
-            i.value = ''; // optional: clear the part qtys
-        });
-        }
-        }
-
-            // run on load (for edit forms or page reload)
-            updateFields();
-
-            // run on change
-            roleSelect.addEventListener('change', updateFields);
-        });
-
     </script>
+
+
     <script src="{{ asset('admin_assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('admin_assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
     <script src="{{ asset('custom/order.js') }}"></script>
@@ -517,27 +529,39 @@
         <!-- Header Section -->
         <div class="header-section rounded-3 border-bottom pb-3 mb-4">
             <div class="row align-items-center">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class=" row align-items-center">
-${data.name ? `<h1 class="name-title display-6 fw-bold mb-2 pb-2">${data.name}</h1>` : ''}
+                            ${data.name ? `<h1 class="name-title display-6 fw-bold mb-2 pb-2">${data.name}</h1>` : ''}
                         <div class="col-md-4  mb-2">
 
-                            ${data.phone_number ? `<p class="fs-7 mb-1"><strong>Phone:</strong> ${data.phone_number}</p>` : ''}
-                            ${data.address ? `<p class="fs-7 mb-1"><strong>Address:</strong> ${data.address}</p>` : ''}
+                            ${data.phone_number ? `<p class="fs-6 mb-1"><strong>Phone:</strong> ${data.phone_number}</p>` : ''}
+                            ${data.address ? `<p class="fs-6 mb-1"><strong>Address:</strong> ${data.address}</p>` : ''}
                         </div>
-                        <div class=" col-md-4 mb-2">
-                            ${data.shalwar_kameez_qty ? `<p class="fs-7 mb-1"><strong>Shalwar Kameez:</strong> ${data.shalwar_kameez_qty}</p>` : ''}
-                            ${data.waistcoat_qty ? `<p class="fs-7 mb-1"><strong>Waistcoat:</strong> ${data.waistcoat_qty}</p>` : ''}
-                            ${data.coat_qty ? `<p class="fs-7 mb-1"><strong>Coat:</strong> ${data.coat_qty}</p>` : ''}
-                            ${data.kurta_qty ? `<p class="fs-7 mb-1"><strong>Kurta:</strong> ${data.kurta_qty}</p>` : ''}
-                        </div>
-                        <div class=" col-md-4 mb-2">
-                            ${data.quantity ? `<p class="fs-7 mb-1"><strong>Quantity:</strong> ${data.quantity}</p>` : ''}
-                            ${data.total ? `<p class="fs-7 mb-1"><strong>Total:</strong> ${data.total}</p>` : ''}
+                         ${ ( (data.shalwar_kameez_qty !== undefined && data.shalwar_kameez_qty !== null && data.shalwar_kameez_qty !== '') ||
+                            (data.waistcoat_qty !== undefined && data.waistcoat_qty !== null && data.waistcoat_qty !== '') ||
+                            (data.coat_qty !== undefined && data.coat_qty !== null && data.coat_qty !== '') ||
+                            (data.kurta_qty !== undefined && data.kurta_qty !== null && data.kurta_qty !== '') ) ? `
+                            <div class="col-md-6 mb-2">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        ${ (data.shalwar_kameez_qty !== undefined && data.shalwar_kameez_qty !== null && data.shalwar_kameez_qty !== '') ? `<p class="fs-6 mb-1"><strong>Shalwar Kameez:</strong> ${data.shalwar_kameez_qty}</p>` : '' }
+                                        ${ (data.waistcoat_qty !== undefined && data.waistcoat_qty !== null && data.waistcoat_qty !== '') ? `<p class="fs-6 mb-1"><strong>Waistcoat:</strong> ${data.waistcoat_qty}</p>` : '' }
+                                    </div>
+                                    <div class="col-md-6">
+                                        ${ (data.coat_qty !== undefined && data.coat_qty !== null && data.coat_qty !== '') ? `<p class="fs-6 mb-1"><strong>Coat:</strong> ${data.coat_qty}</p>` : '' }
+                                        ${ (data.kurta_qty !== undefined && data.kurta_qty !== null && data.kurta_qty !== '') ? `<p class="fs-6 mb-1"><strong>Kurta:</strong> ${data.kurta_qty}</p>` : '' }
+                                    </div>
+                                </div>
+                            </div>
+                            ` : '' }
+
+                        <div class=" col-md-2 mb-2">
+                           ${data.quantity && data.service ? `<p class="fs-6 mb-1"><strong>${data.service}:</strong> ${data.quantity}</p>` : ''}
+                            ${data.total_amount ? `<p class="fs-6 mb-1"><strong>Total:</strong> ${data.total_amount}</p>` : ''}
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <div class="col-md-2 text-md-end mt-3 mt-md-0">
                     ${data.customer_id ? `
                         <span class="d-block fs-7 mb-1">Customer ID</span>
                         <span class="badge text-light px-3 py-2" style="font-size: 36px;">
@@ -606,9 +630,9 @@ ${data.name ? `<h1 class="name-title display-6 fw-bold mb-2 pb-2">${data.name}</
                 <tr>
                     <td>${data.button_style ?? ''}</td>
                     <td>${data.pancha_style ?? ''}</td>
-                    <td>${data.shalwar_pocket == 1 ? 'Yes' : (data.shalwar_pocket == 0 ? 'No' : '')}</td>
+                    <td>${data.shalwar_pocket == 'on' ? 'Yes' : (data.shalwar_pocket == 'off' ? 'no' : '')}</td>
                     <td>${data.side_pocket ?? ''}</td>
-                    <td>${data.front_pocket == 1 ? 'Yes' : (data.front_pocket == 0 ? 'No' : '')}</td>
+                    <td>${data.front_pocket == 'on' ? 'Yes' : (data.front_pocket == 'off' ? 'no' : '')}</td>
                     <td colspan="2"></td>
                 </tr>` : ''}
             </tbody>

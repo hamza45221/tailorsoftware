@@ -70,7 +70,18 @@ var KTModalCustomersAdd = function () {
             $('[name="name"]').val(data.name);
             $('[name="phone_number"]').val(data.phone_number);
             $('[name="phone_number2"]').val(data.phone_number2);
-            $('[name="service"]').val(data.service);
+
+            let service = (data.service || '').trim();
+            $('#service').val(service).trigger('change');
+            if ($('#service').val() === null || $('#service').val() === '') {
+                $('#service option').filter(function () {
+                    return $(this).text().trim().toLowerCase() === service.toLowerCase();
+                }).prop('selected', true);
+            }
+            let refPerson = (data.reference_person || '').trim();
+            $('input[name="reference_person"][value="' + refPerson + '"]').prop('checked', true);
+
+
             $('[name="quantity"]').val(data.quantity);
 
 
@@ -81,7 +92,7 @@ var KTModalCustomersAdd = function () {
 
 
             $('[name="address"]').val(data.address);
-            $('[name="reference_person"]').val(data.reference_person);
+            // $('[name="reference_person"]').val(data.reference_person);
             $('[name="gala"]').val(data.gala);
             $('[name="kamar"]').val(data.kamar);
             $('[name="chhati_tayar"]').val(data.chhati_tayar);
@@ -96,11 +107,10 @@ var KTModalCustomersAdd = function () {
             $('[name="gheera_tayar"]').val(data.gheera_tayar);
             $('[name="pancha"]').val(data.pancha);
             $('[name="shalwar"]').val(data.shalwar);
+            $('[name="side_pocket"]').val(data.side_pocket);
             $('[name="button_style"]').val(data.button_style);
             $('[name="pancha_style"]').val(data.pancha_style);
-            $('[name="shalwar_pocket"]').val(data.shalwar_pocket);
-            $('[name="side_pocket"]').val(data.side_pocket);
-            $('[name="front_pocket"]').val(data.front_pocket);
+
             //        coat measurement
 
             $('[name="w_coat_hip"]').val(data.w_coat_hip);
@@ -114,16 +124,60 @@ var KTModalCustomersAdd = function () {
 
             $('[name="note"]').val(data.note);
             $('[name="total_amount"]').val(data.total_amount);
-            $('[name="status"]').val(data.status);
-            $('[name="gender"]').val(data.gender);
-            $('[name="payment"]').val(data.payment);
-
-
 
             $('[name=id]').val(editId);
-            // $('#image').attr('src',data.image)
 
             edit=true;
+
+            form.find('[name="shalwar_pocket"]').prop('checked', data.shalwar_pocket === 'on');
+            form.find('[name="front_pocket"]').prop('checked', data.front_pocket === 'on');
+
+            let status = (data.status || '').trim();
+            $('#status').val(status).trigger('change');
+            if ($('#status').val() === null || $('#status').val() === '') {
+                $('#status option').filter(function () {
+                    return $(this).text().trim().toLowerCase() === status.toLowerCase();
+                }).prop('selected', true);
+            }
+
+            let collar_bean = (data.collar_bean || '').trim();
+            $('#collar_bean').val(collar_bean).trigger('change');
+            if ($('#collar_bean').val() === null || $('#collar_bean').val() === '') {
+                $('#collar_bean option').filter(function () {
+                    return $(this).text().trim().toLowerCase() === collar_bean.toLowerCase();
+                }).prop('selected', true);
+            }
+
+
+            let button_style = (data.button_style || '').trim();
+            $('#button_style').val(button_style).trigger('change');
+            if ($('#button_style').val() === null || $('#button_style').val() === '') {
+                $('#button_style option').filter(function () {
+                    return $(this).text().trim().toLowerCase() === button_style.toLowerCase();
+                }).prop('selected', true);
+            }
+
+            let pancha_style = (data.pancha_style || '').trim();
+            $('#pancha_style').val(pancha_style).trigger('change');
+            if ($('#pancha_style').val() === null || $('#pancha_style').val() === '') {
+                $('#pancha_style option').filter(function () {
+                    return $(this).text().trim().toLowerCase() === pancha_style.toLowerCase();
+                }).prop('selected', true);
+            }
+
+
+
+            form.find('[name="gender"]').val(data.gender).trigger('change');
+            form.find('[name="payment"]').val(data.payment).trigger('change');
+
+
+
+
+
+
+            // $('#image').attr('src',data.image)
+
+
             console.log(data.description);
             editor.setData(data.description);
         })
@@ -156,6 +210,7 @@ var KTModalCustomersAdd = function () {
             $('[name="pancha"]').val('');
             $('[name="shalwar"]').val('');
             $('[name="button_style"]').val('');
+            $('[name="collar_bean"]').val('');
             $('[name="pancha_style"]').val('');
             $('[name="shalwar_pocket"]').val('');
             $('[name="side_pocket"]').val('');

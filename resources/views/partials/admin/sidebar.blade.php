@@ -3,8 +3,8 @@
     <!--begin::Logo-->
     <div class="app-sidebar-logo px-6 d-flex justify-content-center align-items-center" style="height: 100px !important;" id="kt_app_sidebar_logo">
         <a href="{{ route('admin.dashboard') }}">
-            <img alt="Logo" src="{{ asset('admin_assets/media/logos/custom-1.png') }}" class="h-65px my-4  app-sidebar-logo-default" />
-            <img alt="Logo" src="{{ asset('admin_assets/media/logos/custom-1.png') }}" class="h-20px app-sidebar-logo-minimize" />
+            <img alt="Logo" src="{{ asset('admin_assets/media/logos/shop.png') }}" class="h-75px my-4   app-sidebar-logo-default" />
+            <img alt="Logo" src="{{ asset('admin_assets/media/logos/shop.png') }}" class="h-20px app-sidebar-logo-minimize" />
         </a>
         <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary h-30px w-30px position-absolute top-50 start-100 translate-middle rotate" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
             <i class="ki-duotone ki-black-left-line fs-3 rotate-180">
