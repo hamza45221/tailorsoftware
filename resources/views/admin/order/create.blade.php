@@ -1,55 +1,5 @@
 @extends('layouts.mainadmin')
-<style>
-    .order-table {
-        width: 100%;
-        border-collapse: collapse;
-        background-color: #fff;
-        box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
 
-    .order-table th, .order-table td {
-        border: 1px solid #ccc;
-        text-align: center;
-        padding: 8px;
-        font-size: 16px;
-    }
-
-    .order-header {
-        background-color: #333;
-        color: #fff;
-        font-size: 20px;
-        font-weight: bold;
-        text-align: center;
-    }
-
-    .order-subheader th {
-        background-color: #e9e9e9; /* light gray */
-        font-weight: bold;
-        padding: 18px 0px;
-    }
-
-    .order-row input {
-        width: 100%;
-        text-align: center;
-        border: none;
-        border-bottom: 2px solid #aaa;
-        outline: none;
-        padding: 10px 5px;
-        margin-bottom: 8px;
-    }
-
-    .order-row input:focus {
-        border-bottom: 2px solid #333;
-    }
-    .multiple-fields {
-        display: none; /* hidden by default */
-        margin-top: 15px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        background: #f9f9f9;
-    }
-</style>
 @section('content')
     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
         <!--begin::Content wrapper-->
@@ -79,9 +29,9 @@
             <div id="kt_app_content" class="app-content flex-column-fluid">
                 <div id="kt_app_content_container" class="app-container container-xxl">
                     <div class="card">
-                        <div class="card-body p-4">
+                        <div class="card-body py-4">
                             <!--begin::Form-->
-                            <form class="form" method="POST" enctype="multipart/form-data" action="{{ route('admin.user.store') }}" id="kt_modal_add_customer_form">
+                            <form class="form" method="POST" enctype="multipart/form-data" action="{{ route('admin.order.store') }}" id="kt_modal_add_customer_form">
                                 @csrf
 
                                 <!-- Header -->
@@ -121,8 +71,8 @@
 
                                             <!-- Phone Number -->
                                             <div class="col-md-6 mb-3">
-                                                <label for="phone_number" class="form-label">Phone Number (Home)</label>
-                                                <input type="tel" name="phone_number" id="phone_number2" class="form-control" placeholder="Enter phone number">
+                                                <label for="phone_number2" class="form-label">Phone Number (2)</label>
+                                                <input type="tel" name="phone_number2" id="phone_number2" class="form-control" placeholder="Enter phone number">
                                             </div>
 
 
@@ -169,15 +119,20 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Address -->
+
+
+                                            <!-- Status -->
                                             <div class="col-md-6 mb-3">
-                                                <label for="address" class="form-label">Address</label>
-                                                <textarea  name="address" id="address" rows="2" class="form-control" placeholder="Enter address" ></textarea>
+                                                <label for="status" class="form-label">Status</label>
+                                                <select name="status" id="status" class="form-select" required>
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Complete">Complete</option>
+                                                </select>
                                             </div>
 
                                             <!-- Phone Number -->
-                                            <div class="col-md-6 mb-3">
-                                                <label for="address" class="form-label mb-3">Reference Person</label> <br>
+                                            <div class="col-md-6 mb-4">
+                                                <label for="reference_person" class="form-label mb-3">Reference Person</label> <br>
 
                                                 <label class="form-label me-3">
                                                 <input type="radio" name="reference_person" value="Yes" class="">
@@ -189,100 +144,158 @@
                                             </div>
 
 
-{{--                                            <h2 class="mt-5 pt-4">Measurements</h2><hr>--}}
+                                            <!-- Address -->
+                                            <div class="col-md-12 mb-3">
+                                                <label for="address" class="form-label">Address</label>
+                                                <textarea  name="address" id="address" rows="2" class="form-control" placeholder="Enter address" ></textarea>
+                                            </div>
 
 
-                                            <table class="order-table mt-5 pt-4">
-                                                <thead>
-                                                <!-- Main Header -->
-                                                <tr>
-                                                    <th colspan="7" class="order-header py-5">Measurements</th>
-                                                </tr>
+                                            <div class=" order-table-p-d d-flex flex-column justify-content-center align-items-center">
+                                                <table class="order-table mt-5 pt-4">
+                                                    <thead>
+                                                    <!-- Main Header -->
+                                                    <tr>
+                                                        <th colspan="7" class="order-header py-5" > Shalwar Kameez Measurements</th>
+                                                    </tr>
 
-                                                <!-- First Sub Header -->
-                                                <tr class="order-subheader">
-                                                    <th>گلا</th>
-                                                    <th>کمر</th>
-                                                    <th>چھاتی تیار</th>
-                                                    <th>چھاتی</th>
-                                                    <th>بازو</th>
-                                                    <th>تیرہ</th>
-                                                    <th>لمبائی</th>
-                                                </tr>
-                                                </thead>
+                                                    <!-- First Sub Header -->
+                                                    <tr class="order-subheader">
+                                                        <th>گلا</th>
+                                                        <th>کمر</th>
+                                                        <th>چھاتی تیار</th>
+                                                        <th>چھاتی</th>
+                                                        <th>بازو</th>
+                                                        <th>تیرہ</th>
+                                                        <th>لمبائی</th>
+                                                    </tr>
+                                                    </thead>
 
-                                                <tbody>
-                                                <tr class="order-row">
-                                                    <td><input type="text" name="gala"></td>
-                                                    <td><input type="text" name="kamar"></td>
-                                                    <td><input type="text" name="chhati_tayar"></td>
-                                                    <td><input type="text" name="chhati"></td>
-                                                    <td><input type="text" name="bazoo"></td>
-                                                    <td><input type="text" name="teera"></td>
-                                                    <td><input type="text" name="lambai"></td>
-                                                </tr>
+                                                    <tbody>
+                                                    <tr class="order-row">
+                                                        <td><input type="text" name="gala"></td>
+                                                        <td><input type="text" name="kamar"></td>
+                                                        <td><input type="text" name="chhati_tayar"></td>
+                                                        <td><input type="text" name="chhati"></td>
+                                                        <td><input type="text" name="bazoo"></td>
+                                                        <td><input type="text" name="teera"></td>
+                                                        <td><input type="text" name="lambai"></td>
+                                                    </tr>
 
-                                                <!-- Second Sub Header -->
-                                                <tr class="order-subheader">
-                                                    <th>بٹن</th>
-                                                    <th>کالر</th>
-                                                    <th>کف</th>
-                                                    <th>پٹی</th>
-                                                    <th>گھیرا تیار</th>
-                                                    <th>پانچہ</th>
-                                                    <th>شلوار</th>
-                                                </tr>
+                                                    <!-- Second Sub Header -->
+                                                    <tr class="order-subheader">
+                                                        <th>کالر / بین</th>
+                                                        <th>کالر</th>
+                                                        <th>کف</th>
+                                                        <th>پٹی</th>
+                                                        <th>گھیرا تیار</th>
+                                                        <th>پانچہ</th>
+                                                        <th>شلوار</th>
+                                                    </tr>
 
-                                                <tr class="order-row">
-                                                    <td><input type="text" name="button"></td>
-                                                    <td><input type="text" name="kalar"></td>
-                                                    <td><input type="text" name="kaff"></td>
-                                                    <td><input type="text" name="pati"></td>
-                                                    <td><input type="text" name="gheera tayar"></td>
-                                                    <td><input type="text" name="pancha"></td>
-                                                    <td><input type="text" name="shalwar"></td>
-                                                </tr>
-
-
-                                                <!-- Third Sub Header -->
-                                                <tr class="order-subheader">
-                                                    <th> بٹن</th>
-                                                    <th>پانچہ</th>
-                                                    <th>شلوار پاکٹ</th>
-                                                    <th>سائڈ پاکٹ</th>
-                                                    <th>فرنٹ پاکٹ</th>
-                                                </tr>
-
-                                                <tr class="order-row">
-                                                    <td>
-                                                        <select type="text" class="form-select" name="button_style">
-                                                            <option value="Simple">Simple</option>
-                                                            <option value="Metal">Metal</option>
-                                                            <option value="Fancy">Fancy</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select type="text" class="form-select" name="pancha_style">
-                                                            <option value="Simple">Simple</option>
-                                                            <option value="Kanta">Kanta</option>
-                                                            <option value="Beeding">Beeding</option>
-                                                            <option value="Dora-Kanta">Dora-Kanta</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" name="shalwar pocket"></td>
-                                                    <td><input type="text" name="side pocket"></td>
-                                                    <td><input type="text" name="front pocket"></td>
-                                                </tr>
+                                                    <tr class="order-row">
+                                                        <td>
+                                                            <select type="text" class="form-select"  style="width: 90% !important; border: 0" name="collar_bean">
+                                                                <option value="bean">Bean</option>
+                                                                <option value="collar Nok">Collar Nok</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="text" name="collar"></td>
+                                                        <td><input type="text" name="kaff"></td>
+                                                        <td><input type="text" name="pati"></td>
+                                                        <td><input type="text" name="gheera_tayar"></td>
+                                                        <td><input type="text" name="pancha"></td>
+                                                        <td><input type="text" name="shalwar"></td>
+                                                    </tr>
 
 
-                                                </tbody>
-                                            </table>
+                                                    <!-- Third Sub Header -->
+                                                    <tr class="order-subheader">
+                                                        <th> بٹن</th>
+                                                        <th>پانچہ</th>
+                                                        <th>شلوار پاکٹ</th>
+                                                        <th>سائڈ پاکٹ</th>
+                                                        <th>فرنٹ پاکٹ</th>
+                                                    </tr>
+
+                                                    <tr class="order-row">
+                                                        <td>
+                                                            <select type="text" class="form-select"  style="width: 90% !important; border: 0" name="button_style">
+                                                                <option value="Simple">Simple</option>
+                                                                <option value="Metal">Metal</option>
+                                                                <option value="Fancy">Fancy</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select type="text" class="form-select"  style="width: 90% !important;  border: 0" name="pancha_style">
+                                                                <option value="Simple">Simple</option>
+                                                                <option value="Kanta">Kanta</option>
+                                                                <option value="Beeding">Beeding</option>
+                                                                <option value="Dora-Kanta">Dora-Kanta</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="checkbox" class="" name="shalwar_pocket"></td>
+                                                        <td><input type="text" name="side_pocket"></td>
+                                                        <td><input type="checkbox" name="front_pocket"></td>
+                                                    </tr>
+
+
+                                                    </tbody>
+                                                </table>
+
+
+                                                <table class="order-table mt-5 pt-4">
+                                                    <thead>
+                                                    <!-- Main Header -->
+                                                    <tr>
+                                                        <th colspan="7" class="order-header py-5">Coat / Waistcoat Measurements</th>
+                                                    </tr>
+
+                                                    <!-- First Sub Header -->
+                                                    <tr class="order-subheader">
+                                                        <th>ہپ</th>
+                                                        <th>گلا</th>
+                                                        <th>کمر</th>
+                                                        <th>چھاتی</th>
+                                                        <th>بازو</th>
+                                                        <th>تیرہ</th>
+                                                        <th>لمبائی</th>
+
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                    <tr class="order-row">
+                                                        <td><input type="text" name="w_coat_hip"></td>
+                                                        <td><input type="text" name="w_coat_gala"></td>
+                                                        <td><input type="text" name="w_coat_kamar"></td>
+                                                        <td><input type="text" name="w_coat_chhati"></td>
+                                                        <td><input type="text" name="w_coat_bazoo"></td>
+                                                        <td><input type="text" name="w_coat_teera"></td>
+                                                        <td><input type="text" name="w_coat_lambai"></td>
+
+                                                    </tr>
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
 
                                             <!-- Address -->
                                             <div class="col-md-12 mb-3 mt-5">
                                                 <label for="note" class="form-label">Note</label>
-                                                <textarea  name="address" id="note" rows="4" class="form-control" placeholder="Write here....." ></textarea>
+                                                <textarea  name="note" id="note" rows="4" class="form-control" placeholder="Write here....." ></textarea>
                                             </div>
+
+
+                                            <!-- Quantity (single) -->
+                                            <div class="col-md-6 mb-3" id="singleQuantityWrap">
+                                                <label for="total_amount" class="form-label">Total Amount</label>
+                                                <input type="number" name="total_amount" id="total_amount" class="form-control" placeholder="Enter Amount" min="1" required>
+                                            </div>
+
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -306,33 +319,13 @@
             <!--end::Content-->
         </div>
 
-        <!--begin::Footer-->
-        <div id="kt_app_footer" class="app-footer">
-            <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
-                <div class="text-gray-900 order-2 order-md-1">
-                    <span class="text-muted fw-semibold me-1">2024&copy;</span>
-                    <a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">Keenthemes</a>
-                </div>
-                <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-                    <li class="menu-item">
-                        <a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="https://devs.keenthemes.com" target="_blank" class="menu-link px-2">Support</a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="https://1.envato.market/Vm7VRE" target="_blank" class="menu-link px-2">Purchase</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!--end::Footer-->
+
     </div>
 @endsection
 
 @section('scripts')
     <script>
-        var fetchUrl = '{{ route('admin.user.fetch') }}';
+{{--        var fetchUrl = '{{ route('admin.user.fetch') }}';--}}
 
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -375,8 +368,8 @@
             roleSelect.addEventListener('change', updateFields);
         });
     </script>
-    <script src="{{ asset('admin_assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+{{--    <script src="{{ asset('admin_assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>--}}
     <script src="{{ asset('admin_assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
-    <script src="{{ asset('custom/user.js') }}"></script>
-    <script src="{{ asset('custom/add-user.js') }}"></script>
+    <script src="{{ asset('custom/order.js') }}"></script>
+    <script src="{{ asset('custom/add-order.js') }}"></script>
 @endsection

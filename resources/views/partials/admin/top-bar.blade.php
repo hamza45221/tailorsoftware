@@ -1,7 +1,7 @@
 <!--begin::Header-->
 <div id="kt_app_header" class="app-header" data-kt-sticky="true" data-kt-sticky-activate="{default: true, lg: true}" data-kt-sticky-name="app-header-minimize" data-kt-sticky-offset="{default: '200px', lg: '0'}" data-kt-sticky-animation="false">
     <!--begin::Header container-->
-    <div class="app-container container-fluid d-flex align-items-stretch justify-content-between" id="kt_app_header_container">
+    <div class=" card app-container container-fluid d-flex align-items-stretch justify-content-between" id="kt_app_header_container">
         <!--begin::Sidebar mobile toggle-->
         <div class="d-flex align-items-center d-lg-none ms-n3 me-1 me-md-2" title="Show sidebar menu">
             <div class="btn btn-icon btn-active-color-primary w-35px h-35px" id="kt_app_sidebar_mobile_toggle">
@@ -24,7 +24,7 @@
             <!--begin::Menu wrapper-->
             <div class="app-header-menu app-header-mobile-drawer align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="app-header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_app_header_menu_toggle" data-kt-swapper="true" data-kt-swapper-mode="{default: 'append', lg: 'prepend'}" data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header_wrapper'}">
                 <!--begin::Menu-->
-                <div class="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
+                <div class=" w-100 menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
                     <!--begin:Menu item-->
 
                 </div>
@@ -34,12 +34,21 @@
             <!--begin::Navbar-->
             <div class="app-navbar flex-shrink-0">
 
-                <!--begin::Notifications-->
+                <div class="app-navbar-item ms-1 ms-md-4">
 
-                <!--end::Notifications-->
+                    <div class="d-flex  align-items-center justify-content-center" >
 
+                        <i class="fa-solid fa-phone-volume fs-4 me-3"></i>
+                        <p class="m-0">0322-7111926</p>
+                    </div>
 
-                <!--begin::Theme mode-->
+                    <div  class="d-flex ms-5 align-items-center" >
+                        <i class="fa-solid fa-location-dot fs-4 me-3"></i>
+                        <p  class="m-0">Central Market Near Post Office, Tali Chowk, New Satellite Town, Sargodha</p>
+                    </div>
+
+                </div>
+
                 <div class="app-navbar-item ms-1 ms-md-4">
                     <!--begin::Menu toggle-->
                     <a href="#" class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px" data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
@@ -84,37 +93,12 @@
                             </a>
                         </div>
                         <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3 my-0">
-                            <a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="dark">
-												<span class="menu-icon" data-kt-element="icon">
-													<i class="ki-duotone ki-moon fs-2">
-														<span class="path1"></span>
-														<span class="path2"></span>
-													</i>
-												</span>
-                                <span class="menu-title">Dark</span>
-                            </a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-3 my-0">
-                            <a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="system">
-												<span class="menu-icon" data-kt-element="icon">
-													<i class="ki-duotone ki-screen fs-2">
-														<span class="path1"></span>
-														<span class="path2"></span>
-														<span class="path3"></span>
-														<span class="path4"></span>
-													</i>
-												</span>
-                                <span class="menu-title">System</span>
-                            </a>
-                        </div>
-                        <!--end::Menu item-->
                     </div>
                     <!--end::Menu-->
                 </div>
+
+                <!--begin::Theme mode-->
+
                 <!--end::Theme mode-->
                 <!--begin::User menu-->
                 <div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">

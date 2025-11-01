@@ -36,11 +36,13 @@ var KTCustomersList = function () {
             ],
             columns: [
                 { data: 'id' },
-                // { data: 'image' },
                 { data: 'name' },
-                { data: 'last_name' },
-                { data: 'email' },
+                { data: 'customer_id' },
                 { data: 'phone_number' },
+                { data: 'created_at' },
+                { data: 'address' },
+                { data: 'status' },
+                { data: 'quantity' },
                 { data: 'actions' }
             ]
 

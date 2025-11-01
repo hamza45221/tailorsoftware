@@ -69,7 +69,7 @@
                                 <h1 class="text-gray-900 mb-3 fs-3x" data-kt-translate="sign-in-title">Sign In</h1>
                                 <!--end::Title-->
                                 <!--begin::Text-->
-                                <div class="text-gray-500 fw-semibold fs-6" data-kt-translate="general-desc">Get unlimited access & earn money</div>
+                                <div class="text-gray-500 fw-semibold fs-6" data-kt-translate="general-desc">Login to manage and track your stitching work efficiently.</div>
                                 <!--end::Link-->
                             </div>
                             <!--begin::Heading-->
@@ -90,7 +90,7 @@
                             <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-10">
                                 <div></div>
                                 <!--begin::Link-->
-                                <a href="{{ url('password/reset') }}" class="link-primary" data-kt-translate="sign-in-forgot-password">Forgot Password ?</a>
+{{--                                <a href="{{ url('password/reset') }}" class="link-primary" data-kt-translate="sign-in-forgot-password">Forgot Password ?</a>--}}
                                 <!--end::Link-->
                             </div>
                             <!--end::Wrapper-->
@@ -127,7 +127,7 @@
         </div>
         <!--end::Aside-->
         <!--begin::Body-->
-        <div class="d-none d-lg-flex flex-lg-row-fluid w-50 bgi-size-cover bgi-position-y-center bgi-position-x-start bgi-no-repeat" style="background-image: url(admin_assets/media/auth/bg11.png)"></div>
+        <div class="d-none d-lg-flex flex-lg-row-fluid w-50 bgi-size-cover bgi-position-y-bottom bgi-position-x-start bgi-no-repeat" style="background-image: url(admin_assets/media/auth/stitch.webp)"></div>
         <!--begin::Body-->
     </div>
     <!--end::Authentication - Sign-in-->

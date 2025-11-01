@@ -8,42 +8,42 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\DashboardController::class, 'dashboard'])->name('admin.dashboard');
+Route::get('/dashboard/pending-orders', [\App\Http\Controllers\DashboardController::class, 'fetchPendingOrders'])->name('dashboard.pending.orders');
 
-Route::group(['prefix'=>'dashboard'], function () {
 
-    Route::get('/', [App\Http\Controllers\DashboardController::class, 'dashboard'])->name('admin.dashboard');
+
+Route::middleware(['auth'])->prefix('dashboard')->group(function () {
 
     Route::group(['prefix'=>'user'], function () {
         Route::get('/', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.user');
 
         Route::get('/fetch',[\App\Http\Controllers\Admin\UserController::class,'fetch'])->name('admin.user.fetch');
         Route::post('/store',[\App\Http\Controllers\Admin\UserController::class,'store'])->name('admin.user.store');
-        Route::post('/delete-multiple',[\App\Http\Controllers\Admin\UserController::class,'deleteMultiple'])->name('admin.user.delete.multiple');
+        Route::any('/delete-multiple',[\App\Http\Controllers\Admin\UserController::class,'deleteMultiple'])->name('admin.user.delete.multiple');
         Route::get('/delete/{id}',[\App\Http\Controllers\Admin\UserController::class,'delete'])->name('admin.user.delete');
 
     });
 
 
-    Route::group(['prefix'=>'customer'], function () {
-        Route::get('/', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('admin.customer');
-
-        Route::get('/fetch',[\App\Http\Controllers\Admin\CustomerController::class,'fetch'])->name('admin.customer.fetch');
-        Route::post('/store',[\App\Http\Controllers\Admin\CustomerController::class,'store'])->name('admin.customer.store');
-        Route::post('/delete-multiple',[\App\Http\Controllers\Admin\CustomerController::class,'deleteMultiple'])->name('admin.customer.delete.multiple');
-        Route::get('/delete/{id}',[\App\Http\Controllers\Admin\CustomerController::class,'delete'])->name('admin.customer.delete');
-
-    });
+//    Route::group(['prefix'=>'customer'], function () {
+//        Route::get('/', [App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('admin.customer');
+//        Route::get('/fetch',[\App\Http\Controllers\Admin\CustomerController::class,'fetch'])->name('admin.customer.fetch');
+//        Route::post('/store',[\App\Http\Controllers\Admin\CustomerController::class,'store'])->name('admin.customer.store');
+//        Route::post('/delete-multiple',[\App\Http\Controllers\Admin\CustomerController::class,'deleteMultiple'])->name('admin.customer.delete.multiple');
+//        Route::get('/delete/{id}',[\App\Http\Controllers\Admin\CustomerController::class,'delete'])->name('admin.customer.delete');
+//    });
 
 
 
     Route::group(['prefix'=>'order'], function () {
-        Route::get('/', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.order');
-        Route::get('/create', [App\Http\Controllers\Admin\OrderController::class, 'create'])->name('admin.create');
+        Route::get('/list', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.order');
+        Route::get('/create', [App\Http\Controllers\Admin\OrderController::class, 'create'])->name('admin.order.create');
 
         Route::get('/fetch',[\App\Http\Controllers\Admin\OrderController::class,'fetch'])->name('admin.order.fetch');
         Route::post('/store',[\App\Http\Controllers\Admin\OrderController::class,'store'])->name('admin.order.store');
-        Route::post('/delete-multiple',[\App\Http\Controllers\Admin\OrderController::class,'deleteMultiple'])->name('admin.order.delete.multiple');
+        Route::any('/delete-multiple',[\App\Http\Controllers\Admin\OrderController::class,'deleteMultiple'])->name('admin.order.delete.multiple');
         Route::get('/delete/{id}',[\App\Http\Controllers\Admin\OrderController::class,'delete'])->name('admin.order.delete');
 
     });

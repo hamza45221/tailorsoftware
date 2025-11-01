@@ -40,38 +40,46 @@
 
 
 
-{{--                        <div class="menu-item pt-5">--}}
-{{--                            <div class="menu-content">--}}
 
-                        <a class="menu-link {{ request()->routeIs('admin.customer*') ? 'active' : '' }}"
-                           href="{{ route('admin.customer') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                            <span class="menu-title">Customers</span>
+
+                        <!-- Dashboard -->
+                        <a class="menu-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+                           href="{{ route('admin.dashboard') }}">
+    <span class="menu-bullet">
+        <span class="bullet bullet-dot"></span>
+    </span>
+                            <span class="menu-title">Dashboard</span>
                         </a>
 
-                        <a class="menu-link {{ request()->routeIs('admin.order*') ? 'active' : '' }}"
+                        <!-- Orders / Customers -->
+                        <h5 class="text-light ms-5 py-4 mt-4">Orders / Customers</h5>
+
+                        <a class="menu-link {{ request()->routeIs('admin.order.create') ? 'active' : '' }}"
+                           href="{{ route('admin.order.create') }}">
+    <span class="menu-bullet">
+        <span class="bullet bullet-dot"></span>
+    </span>
+                            <span class="menu-title">Add New</span>
+                        </a>
+
+                        <a class="menu-link {{ request()->routeIs('admin.order') ? 'active' : '' }}"
                            href="{{ route('admin.order') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                            <span class="menu-title">Order List</span>
+    <span class="menu-bullet">
+        <span class="bullet bullet-dot"></span>
+    </span>
+                            <span class="menu-title">Orders List</span>
                         </a>
 
+                        <!-- Settings -->
+                        <h5 class="text-light ms-5 py-4 mt-4">Settings</h5>
 
-                        <a class="menu-link {{ request()->routeIs('admin.user*') ? 'active' : '' }}"
-                                   href="{{ route('admin.user') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                    <span class="menu-title">User Setting</span>
-                                </a>
-
-
-
-
-
+                        <a class="menu-link {{ request()->routeIs('admin.user') ? 'active' : '' }}"
+                           href="{{ route('admin.user') }}">
+    <span class="menu-bullet">
+        <span class="bullet bullet-dot"></span>
+    </span>
+                            <span class="menu-title">Users</span>
+                        </a>
 
 
 

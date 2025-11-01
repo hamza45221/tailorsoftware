@@ -28,6 +28,144 @@
     @yield('styles')
     <!--end::Global Stylesheets Bundle-->
     <script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
+
+    <style>
+
+
+        .order-table-p-d
+        {
+            overflow: auto;
+        }
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+
+            /*box-shadow: 0 0 5px rgba(0,0,0,0.1);.*/
+        }
+
+        .order-table th, .order-table td {
+            border: 0.5px solid #ccc;
+            text-align: center;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        .order-header {
+            background-color: #333;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .order-subheader th {
+            background-color: #e9e9e9; /* light gray */
+            font-weight: bold;
+            padding: 18px 0px;
+        }
+
+        .order-row input {
+            width: 100%;
+            text-align: center;
+            border: none;
+            border-bottom: 2px solid #aaa;
+            outline: none;
+            padding: 10px 5px;
+            margin-bottom: 8px;
+        }
+
+        .order-row input:focus {
+            border-bottom: 2px solid #333;
+        }
+        .multiple-fields {
+            display: none; /* hidden by default */
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: #f9f9f9;
+        }
+
+
+    /*  ===============  view card CSS  ==================   */
+
+
+
+        .header-section {
+            background: black;
+            color: white;
+            padding: 1.5rem 2rem;
+        }
+        .name-title {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: white;
+        }
+        .profession {
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .content-section {
+            padding: 2.5rem 2rem;
+        }
+        .section-title {
+            font-weight: 700;
+            color: #2c3e50;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .info-table {
+            width: 100%;
+        }
+        .info-table td {
+            padding: 0.6rem 0;
+            vertical-align: top;
+        }
+        .info-table .label {
+            font-weight: 600;
+            color: #495057;
+            width: 35%;
+        }
+        .info-table .field {
+            color: #6c757d;
+            width: 25%;
+        }
+        .info-table .value {
+            font-weight: 500;
+            color: #212529;
+            width: 40%;
+        }
+
+
+        .view-table th,.order-table td {
+                padding: 10px !important;
+        }
+
+
+        @media (max-width: 768px) {
+            .header-section {
+                padding: 1.5rem 1.5rem;
+                text-align: center;
+            }
+            .content-section {
+                padding: 2rem 1.5rem;
+            }
+            .info-table .label,
+            .info-table .field,
+            .info-table .value {
+                display: block;
+                width: 100%;
+            }
+            .info-table tr {
+                margin-bottom: 1rem;
+                display: block;
+            }
+        }
+    </style>
+
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -607,7 +745,7 @@
         <!--end::Body-->
         <!--begin::Footer-->
         <div class="card-footer py-5 text-center" id="kt_activities_footer">
-            <a href="pages/user-profile/activity.html" class="btn btn-bg-body text-primary">View All Activities
+            <a href="#" class="btn btn-bg-body text-primary">View All Activities
                 <i class="ki-duotone ki-arrow-right fs-3 text-primary">
                     <span class="path1"></span>
                     <span class="path2"></span>
@@ -851,7 +989,7 @@
                         <!--end::User-->
                         <!--begin::Text-->
                         <div class="p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start" data-kt-element="message-text">You can unwatch this repository immediately by clicking here:
-                            <a href="https://keenthemes.com">Keenthemes.com</a></div>
+                            <a href="https://codebeter.com">codebeter.com</a></div>
                         <!--end::Text-->
                     </div>
                     <!--end::Wrapper-->
